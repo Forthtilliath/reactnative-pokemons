@@ -39,7 +39,7 @@ export function PokemonCard({ style, id, name }: Props) {
 						width={72}
 						height={72}
 					/>
-					<ThemedText>{name}</ThemedText>
+					<ThemedText style={styles.name}>{name}</ThemedText>
 				</Card>
 			</Pressable>
 		</Link>
@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
 	},
 	id: {
 		alignSelf: "flex-end",
+	},
+	name: {
+		textTransform: "capitalize",
 	},
 	shadow: {
 		position: "absolute",
