@@ -20,8 +20,11 @@ type API = {
 		height: number;
 		types: { type: { name: keyof (typeof Colors)["type"] } }[];
 		stats: { base_stat: number; stat: { name: string } }[];
-		moves: { move: { name: string } }[];
+		abilities: { ability: { name: string } }[];
 		cries: { latest: string };
+	};
+	"/pokemon-species/[id]": {
+		flavor_text_entries: { flavor_text: string; version: { name: string } }[];
 	};
 };
 
@@ -32,9 +35,8 @@ export function useFetchQuery<T extends keyof API>(
 	const localUrl =
 		endpoint +
 		Object.entries(params || {}).reduce(
-			(acc, [key, value]) => acc.replaceAll(`[${key}]`, value),
-			path,
-			// (acc, [key, value]) => `${acc}&${key}=${value}`,
+			(acc, [key, value]) => acc.replaceAll(`[${key}]`, value.toString()),
+			path as string,
 		);
 
 	return useQuery({
