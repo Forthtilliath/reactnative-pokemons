@@ -1,5 +1,6 @@
 import { Card } from "@/components/Card";
 import { PokemonCard } from "@/components/pokemon/PokemonCard";
+import { RootView } from "@/components/RootView";
 import { Row } from "@/components/Row";
 import { SearchBar } from "@/components/SearchBar";
 import { SortButton } from "@/components/SortButton";
@@ -8,14 +9,7 @@ import { getPokemonId } from "@/functions/pokemon";
 import { useInfiniteFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useState } from "react";
-import {
-	ActivityIndicator,
-	FlatList,
-	Image,
-	StyleSheet,
-	View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ActivityIndicator, FlatList, Image, StyleSheet } from "react-native";
 
 export default function Index() {
 	const colors = useThemeColors();
@@ -32,12 +26,11 @@ export default function Index() {
 			(pokemon) =>
 				pokemon.name.includes(search.toLowerCase()) ||
 				pokemon.id.toString().includes(search),
-			// getPokemonId(pokemon.url).toString().includes(search),
 		)
 		.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1));
 
 	return (
-		<SafeAreaView style={[styles.container, { backgroundColor: colors.tint }]}>
+		<RootView>
 			<Row style={styles.header} gap={16}>
 				<Image
 					source={require("@/assets/images/pokeball.png")}
@@ -48,7 +41,7 @@ export default function Index() {
 					Pokédex
 				</ThemedText>
 			</Row>
-			<Row style={styles.search}>
+			<Row style={styles.search} gap={16}>
 				<SearchBar value={search} onChange={setSearch} />
 				<SortButton value={sortBy} onChange={setSortBy} />
 			</Row>
@@ -73,18 +66,14 @@ export default function Index() {
 					)}
 				/>
 			</Card>
-		</SafeAreaView>
+		</RootView>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 4,
-	},
 	header: {
 		paddingHorizontal: 12,
-		paddingVertical: 8,
+		paddingBottom: 8,
 	},
 	search: {
 		paddingHorizontal: 12,

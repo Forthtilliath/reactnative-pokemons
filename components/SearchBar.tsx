@@ -1,10 +1,4 @@
-import {
-	Image,
-	Platform,
-	StyleSheet,
-	TextInput,
-	TouchableOpacity,
-} from "react-native";
+import { Image, StyleSheet, TextInput } from "react-native";
 import { Row } from "./Row";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
@@ -26,7 +20,6 @@ export function SearchBar({ value, onChange }: Props) {
 				width={16}
 				height={16}
 			/>
-			{/* <TouchableOpacity style={{ height: 40 }}> */}
 			<TextInput
 				style={styles.input}
 				value={value}
@@ -34,7 +27,6 @@ export function SearchBar({ value, onChange }: Props) {
 				placeholder="Search"
 				placeholderTextColor={colors.grayMedium}
 			/>
-			{/* </TouchableOpacity> */}
 		</Row>
 	);
 }
@@ -48,14 +40,8 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		flex: 1,
-		height: 16,
+		height: 40,
 		fontSize: 10,
 		lineHeight: 16,
-		minHeight: 40
-		// ...Platform.select({
-		// 	android: {
-		// 		height: 40,
-		// 	},
-		// }),
 	},
 });

@@ -1,3 +1,4 @@
+import type { Colors } from "@/constants/Colors";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 const endpoint = "https://pokeapi.co/api/v2";
@@ -11,13 +12,35 @@ type API = {
 			url: string;
 		}[];
 	};
+	"/pokemon/[id]": {
+		id: number;
+		name: string;
+		url: string;
+		weight: number;
+		height: number;
+		types: { type: { name: keyof (typeof Colors)["type"] } }[];
+		stats: { base_stat: number; stat: { name: string } }[];
+		moves: { move: { name: string } }[];
+		cries: { latest: string };
+	};
 };
 
-export function useFetchQuery<T extends keyof API>(path: T) {
+export function useFetchQuery<T extends keyof API>(
+	path: T,
+	params?: Record<string, string | number>,
+) {
+	const localUrl =
+		endpoint +
+		Object.entries(params || {}).reduce(
+			(acc, [key, value]) => acc.replaceAll(`[${key}]`, value),
+			path,
+			// (acc, [key, value]) => `${acc}&${key}=${value}`,
+		);
+
 	return useQuery({
-		queryKey: [path],
+		queryKey: [localUrl],
 		queryFn: () =>
-			fetch(endpoint + path, {
+			fetch(localUrl, {
 				headers: {
 					Accept: "application/json",
 				},
@@ -35,6 +58,7 @@ export function useInfiniteFetchQuery<T extends keyof API>(path: T) {
 					Accept: "application/json",
 				},
 			}).then((res) => res.json() as Promise<API[T]>),
-		getNextPageParam: (lastPage) => lastPage?.next,
+		getNextPageParam: (lastPage) =>
+			"next" in lastPage ? lastPage.next : undefined,
 	});
 }

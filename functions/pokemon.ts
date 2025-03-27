@@ -4,3 +4,7 @@ export function getPokemonId(url: string): number {
 	if (!match) throw new Error(`Invalid URL: ${url}`);
 	return Number.parseInt(match[1], 10);
 }
+
+export function getPokemonArtwork(id: number | string): string {
+	return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+}
