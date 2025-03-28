@@ -48,18 +48,15 @@ export default function Pokemon() {
 		if (e.nativeEvent.pageScrollState !== "idle") return;
 		if (offset.current === 0) return;
 		if (offset.current === -1 && id === 2) return;
+		if (offset.current === 1 && id === Number.POSITIVE_INFINITY) return;
 
 		setId(id + offset.current);
+		offset.current = 0;
+		// pager.current?.setPageWithoutAnimation(1);
 	};
 
 	const onPrevious = () => pager.current?.setPage(0);
 	const onNext = () => pager.current?.setPage(2);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: reset offset & pager when id changes
-	useEffect(() => {
-		offset.current = 0;
-		pager.current?.setPageWithoutAnimation(1);
-	}, [id]);
 
 	return (
 		<PagerView
@@ -93,7 +90,6 @@ type Props = {
 };
 function PokemonView({ id, onPrevious, onNext }: Props) {
 	const colors = useThemeColors();
-	const params = useLocalSearchParams<{ id: string }>();
 	const { data: pokemon } = useFetchQuery("/pokemon/[id]", { id });
 	const { data: species } = useFetchQuery("/pokemon-species/[id]", { id });
 	const mainType = pokemon?.types?.[0].type.name;
