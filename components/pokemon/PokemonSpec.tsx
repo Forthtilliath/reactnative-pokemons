@@ -13,6 +13,7 @@ type Props = ViewProps & {
 	title: string;
 	description: string;
 	image?: ImageSourcePropType;
+	capitalizeTitle?: boolean;
 };
 
 export function PokemonSpec({
@@ -20,13 +21,16 @@ export function PokemonSpec({
 	title,
 	description,
 	image,
+	capitalizeTitle,
 	...rest
 }: Props) {
 	return (
 		<View style={[style, styles.root]} {...rest}>
 			<Row style={styles.row}>
 				{image && <Image source={image} width={16} height={16} />}
-				<ThemedText style={styles.title}>{title}</ThemedText>
+				<ThemedText style={[capitalizeTitle && styles.capitalize]}>
+					{title}
+				</ThemedText>
 			</Row>
 			<ThemedText variant="caption" color="grayMedium">
 				{description}
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
 		height: 32,
 		alignItems: "center",
 	},
-	title: {
+	capitalize: {
 		textTransform: "capitalize",
 	},
 });

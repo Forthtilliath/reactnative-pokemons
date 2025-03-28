@@ -2,6 +2,12 @@ import { StyleSheet, View, type ViewProps } from "react-native";
 import { Row } from "../Row";
 import { ThemedText } from "../ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+} from "react-native-reanimated";
+import { useEffect } from "react";
 
 type Props = ViewProps & {
 	name: string;
@@ -11,14 +17,23 @@ type Props = ViewProps & {
 
 export function PokemonStat({ style, name, value, color, ...rest }: Props) {
 	const colors = useThemeColors();
+	const sharedValue = useSharedValue(0);
+	const barInnerStyle = useAnimatedStyle(() => ({
+		flex: sharedValue.value,
+	}));
+	const barBackgroundStyle = useAnimatedStyle(() => ({
+		flex: 255 - sharedValue.value,
+	}));
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: no need to add sharedValue
+	useEffect(() => {
+		sharedValue.value = withSpring(value);
+	}, [value])
 
 	return (
 		<Row style={[style, styles.root]} {...rest} gap={8}>
 			<View style={[styles.name, { borderColor: colors.grayLight }]}>
-				<ThemedText
-					variant="subtitle3"
-					style={[styles.nameText, { color }]}
-				>
+				<ThemedText variant="subtitle3" style={[styles.nameText, { color }]}>
 					{name}
 				</ThemedText>
 			</View>
@@ -26,13 +41,14 @@ export function PokemonStat({ style, name, value, color, ...rest }: Props) {
 				<ThemedText>{value.toString().padStart(3, "0")}</ThemedText>
 			</View>
 			<Row style={styles.bar}>
-				<View
-					style={[styles.barInner, { flex: value, backgroundColor: color }]}
+				<Animated.View
+					style={[styles.barInner, { backgroundColor: color }, barInnerStyle]}
 				/>
-				<View
+				<Animated.View
 					style={[
 						styles.barBackground,
-						{ flex: 255 - value, backgroundColor: color },
+						{ backgroundColor: color },
+						barBackgroundStyle,
 					]}
 				/>
 			</Row>
@@ -50,7 +66,7 @@ const styles = StyleSheet.create({
 	},
 	nameText: {
 		textTransform: "uppercase",
-		alignSelf: "flex-end"
+		alignSelf: "flex-end",
 	},
 	value: {
 		width: 23,

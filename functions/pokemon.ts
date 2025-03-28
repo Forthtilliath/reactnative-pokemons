@@ -10,11 +10,11 @@ export function getPokemonArtwork(id: number | string): string {
 }
 
 export function formatWeight(weight?: number) {
-	if (!weight) return "";
+	if (!weight) return "--";
 	return `${weight / 10} kg`.replace(".", ",");
 }
 
 export function formatHeight(height?: number) {
-	if (!height) return "";
+	if (!height) return "--";
 	return `${height / 10} m`.replace(".", ",");
 }

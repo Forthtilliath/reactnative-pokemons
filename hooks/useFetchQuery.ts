@@ -1,4 +1,5 @@
 import type { Colors } from "@/constants/Colors";
+import { fetchJson } from "@/functions/fetch";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 const endpoint = "https://pokeapi.co/api/v2";
@@ -41,12 +42,7 @@ export function useFetchQuery<T extends keyof API>(
 
 	return useQuery({
 		queryKey: [localUrl],
-		queryFn: () =>
-			fetch(localUrl, {
-				headers: {
-					Accept: "application/json",
-				},
-			}).then((res) => res.json() as Promise<API[T]>),
+		queryFn: () => fetchJson<API[T]>(localUrl),
 	});
 }
 
@@ -54,12 +50,7 @@ export function useInfiniteFetchQuery<T extends keyof API>(path: T) {
 	return useInfiniteQuery({
 		queryKey: [path],
 		initialPageParam: endpoint + path,
-		queryFn: ({ pageParam }) =>
-			fetch(pageParam, {
-				headers: {
-					Accept: "application/json",
-				},
-			}).then((res) => res.json() as Promise<API[T]>),
+		queryFn: ({ pageParam }) => fetchJson<API[T]>(pageParam),
 		getNextPageParam: (lastPage) =>
 			"next" in lastPage ? lastPage.next : undefined,
 	});
