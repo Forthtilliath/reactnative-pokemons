@@ -17,6 +17,9 @@ import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { Audio } from "expo-av";
+import PagerView from "react-native-pager-view";
+import type { DirectEventHandler } from "react-native/Libraries/Types/CodegenTypes";
+import { useEffect, useRef, useState } from "react";
 
 const STATS = {
 	hp: "hp",
@@ -27,10 +30,70 @@ const STATS = {
 	speed: "spd",
 };
 
+type PagerViewHandler<T> = DirectEventHandler<Readonly<T>>;
+
 export default function Pokemon() {
+	const params = useLocalSearchParams<{ id: string }>();
+	const [id, setId] = useState(Number.parseInt(params.id, 10));
+	const offset = useRef(1);
+	const pager = useRef<PagerView>(null);
+
+	const onPageSelected: PagerViewHandler<{ position: number }> = (e) => {
+		offset.current = e.nativeEvent.position - 1;
+	};
+
+	const onPageScrollStateChanged: PagerViewHandler<{
+		pageScrollState: "idle" | "dragging" | "settling";
+	}> = (e) => {
+		if (e.nativeEvent.pageScrollState !== "idle") return;
+		if (offset.current === 0) return;
+		if (offset.current === -1 && id === 2) return;
+
+		setId(id + offset.current);
+	};
+
+	const onPrevious = () => pager.current?.setPage(0);
+	const onNext = () => pager.current?.setPage(2 + offset.current);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reset offset & pager when id changes
+	useEffect(() => {
+		offset.current = 0;
+		pager.current?.setPageWithoutAnimation(1);
+	}, [id]);
+
+	return (
+		<PagerView
+			ref={pager}
+			initialPage={1}
+			style={{ flex: 1 }}
+			onPageSelected={onPageSelected}
+			onPageScrollStateChanged={onPageScrollStateChanged}
+		>
+			<PokemonView
+				onNext={onNext}
+				onPrevious={onPrevious}
+				key={id - 1}
+				id={id - 1}
+			/>
+			<PokemonView onNext={onNext} onPrevious={onPrevious} key={id} id={id} />
+			<PokemonView
+				onNext={onNext}
+				onPrevious={onPrevious}
+				key={id + 1}
+				id={id + 1}
+			/>
+		</PagerView>
+	);
+}
+
+type Props = {
+	id: number;
+	onPrevious: () => void;
+	onNext: () => void;
+};
+function PokemonView({ id, onPrevious, onNext }: Props) {
 	const colors = useThemeColors();
 	const params = useLocalSearchParams<{ id: string }>();
-	const id = Number.parseInt(params.id, 10);
 	const { data: pokemon } = useFetchQuery("/pokemon/[id]", { id });
 	const { data: species } = useFetchQuery("/pokemon-species/[id]", { id });
 	const mainType = pokemon?.types?.[0].type.name;
@@ -53,9 +116,6 @@ export default function Pokemon() {
 		);
 		sound.playAsync();
 	};
-
-	const onPrevious = () => router.replace(`/pokemon/${id - 1}`);
-	const onNext = () => router.replace(`/pokemon/${id + 1}`);
 
 	return (
 		<RootView backgroundColor={colorType}>
@@ -84,7 +144,7 @@ export default function Pokemon() {
 						</Row>
 					</Pressable>
 					<ThemedText variant="headline" color="grayWhite">
-						&#35;{params.id.padStart(3, "0")}
+						&#35;{id.toString().padStart(3, "0")}
 					</ThemedText>
 				</Row>
 				<Card style={styles.card}>
@@ -205,7 +265,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 20,
 		gap: 16,
 		alignItems: "center",
-		overflow: "visible"
+		overflow: "visible",
 	},
 	spec: {
 		borderStyle: "solid",
