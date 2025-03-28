@@ -128,7 +128,6 @@ export default function Pokemon() {
 						</View>
 					</Card>
 				</View>
-				<Text>Pokemon {params.id}</Text>
 			</View>
 		</RootView>
 	);
@@ -160,6 +159,7 @@ const styles = StyleSheet.create({
 	card: {
 		paddingHorizontal: 20,
 		paddingTop: 60,
+		paddingBottom: 20,
 		gap: 16,
 		alignItems: "center",
 	},

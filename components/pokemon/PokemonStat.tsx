@@ -43,7 +43,7 @@ export function PokemonStat({ style, name, value, color, ...rest }: Props) {
 const styles = StyleSheet.create({
 	root: {},
 	name: {
-		width: 39,
+		width: 40,
 		paddingRight: 12,
 		borderRightWidth: 1,
 		borderStyle: "solid",
