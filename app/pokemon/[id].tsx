@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 20,
 		gap: 16,
 		alignItems: "center",
+		overflow: "visible"
 	},
 	spec: {
 		borderStyle: "solid",
