@@ -53,7 +53,7 @@ export default function Pokemon() {
 	};
 
 	const onPrevious = () => pager.current?.setPage(0);
-	const onNext = () => pager.current?.setPage(2 + offset.current);
+	const onNext = () => pager.current?.setPage(2);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: reset offset & pager when id changes
 	useEffect(() => {
