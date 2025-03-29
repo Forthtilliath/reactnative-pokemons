@@ -48,11 +48,10 @@ export default function Pokemon() {
 		if (e.nativeEvent.pageScrollState !== "idle") return;
 		if (offset.current === 0) return;
 		if (offset.current === -1 && id === 2) return;
-		if (offset.current === 1 && id === Number.POSITIVE_INFINITY) return;
+		if (offset.current === 1 && id === 1024) return;
 
 		setId(id + offset.current);
 		offset.current = 0;
-		// pager.current?.setPageWithoutAnimation(1);
 	};
 
 	const onPrevious = () => pager.current?.setPage(0);
