@@ -40,7 +40,7 @@ export function PokemonCard({ style, id, name }: Props) {
 						width={72}
 						height={72}
 					/>
-					<ThemedText style={styles.name}>{name}</ThemedText>
+					<ThemedText style={styles.name} numberOfLines={1}>{name}</ThemedText>
 				</Card>
 			</Pressable>
 		</Link>
