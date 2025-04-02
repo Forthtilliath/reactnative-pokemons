@@ -1,10 +1,10 @@
 import { Card } from "@/components/Card";
-import { PokemonSpec } from "@/components/pokemon/PokemonSpec";
-import { PokemonStat } from "@/components/pokemon/PokemonStat";
-import { PokemonType } from "@/components/pokemon/PokemonType";
 import { RootView } from "@/components/RootView";
 import { Row } from "@/components/Row";
 import { ThemedText } from "@/components/ThemedText";
+import { PokemonSpec } from "@/components/pokemon/PokemonSpec";
+import { PokemonStat } from "@/components/pokemon/PokemonStat";
+import { PokemonType } from "@/components/pokemon/PokemonType";
 import { Colors } from "@/constants/Colors";
 import {
 	formatHeight,
@@ -13,13 +13,13 @@ import {
 } from "@/functions/pokemon";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { Audio } from "expo-av";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router/build/hooks";
+import { useEffect, useRef, useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { Audio } from "expo-av";
 import PagerView from "react-native-pager-view";
 import type { DirectEventHandler } from "react-native/Libraries/Types/CodegenTypes";
-import { useEffect, useRef, useState } from "react";
 
 const STATS = {
 	hp: "hp",

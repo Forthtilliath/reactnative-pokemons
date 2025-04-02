@@ -1,4 +1,4 @@
-import { View, type ViewStyle, type ViewProps } from "react-native";
+import { View, type ViewProps, type ViewStyle } from "react-native";
 
 type Props = ViewProps & {
 	gap?: number;

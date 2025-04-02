@@ -1,6 +1,6 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import type { ViewStyle, ViewProps } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
+import type { ViewProps, ViewStyle } from "react-native";
 import Animated, {
 	Easing,
 	interpolateColor,
@@ -9,7 +9,7 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from "react-native-reanimated";
-import { useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = ViewProps & {
 	backgroundColor?: string;

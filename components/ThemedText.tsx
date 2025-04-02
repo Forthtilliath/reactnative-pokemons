@@ -15,7 +15,10 @@ export function ThemedText({
 }: Props) {
 	const colors = useThemeColors();
 	return (
-		<Text style={[styles[variant], { color: colors[color] }, style]} {...rest} />
+		<Text
+			style={[styles[variant], { color: colors[color] }, style]}
+			{...rest}
+		/>
 	);
 }
 

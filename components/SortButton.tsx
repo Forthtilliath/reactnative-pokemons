@@ -1,3 +1,6 @@
+import { Shadows } from "@/constants/Shadows";
+import { useThemeColors } from "@/hooks/useThemeColors";
+import { useRef, useState } from "react";
 import {
 	Dimensions,
 	Image,
@@ -7,13 +10,10 @@ import {
 	Text,
 	View,
 } from "react-native";
-import { useThemeColors } from "@/hooks/useThemeColors";
-import { useRef, useState } from "react";
-import { ThemedText } from "./ThemedText";
 import { Card } from "./Card";
-import { Row } from "./Row";
 import { Radio } from "./Radio";
-import { Shadows } from "@/constants/Shadows";
+import { Row } from "./Row";
+import { ThemedText } from "./ThemedText";
 
 type Props = {
 	value: "id" | "name";

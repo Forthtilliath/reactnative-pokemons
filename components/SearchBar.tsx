@@ -1,6 +1,6 @@
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { Image, StyleSheet, TextInput } from "react-native";
 import { Row } from "./Row";
-import { useThemeColors } from "@/hooks/useThemeColors";
 
 type Props = {
 	value: string;

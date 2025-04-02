@@ -1,10 +1,10 @@
 import { Card } from "@/components/Card";
-import { PokemonCard } from "@/components/pokemon/PokemonCard";
 import { RootView } from "@/components/RootView";
 import { Row } from "@/components/Row";
 import { SearchBar } from "@/components/SearchBar";
 import { SortButton } from "@/components/SortButton";
 import { ThemedText } from "@/components/ThemedText";
+import { PokemonCard } from "@/components/pokemon/PokemonCard";
 import { getPokemonId } from "@/functions/pokemon";
 import { useInfiniteFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";

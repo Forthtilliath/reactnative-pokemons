@@ -6,8 +6,8 @@ import {
 	View,
 	type ViewProps,
 } from "react-native";
-import { ThemedText } from "../ThemedText";
 import { Row } from "../Row";
+import { ThemedText } from "../ThemedText";
 
 type Props = ViewProps & {
 	title: string;

@@ -1,3 +1,6 @@
+import { getPokemonArtwork } from "@/functions/pokemon";
+import { useThemeColors } from "@/hooks/useThemeColors";
+import { Link } from "expo-router";
 import {
 	Image,
 	Pressable,
@@ -7,9 +10,6 @@ import {
 } from "react-native";
 import { Card } from "../Card";
 import { ThemedText } from "../ThemedText";
-import { useThemeColors } from "@/hooks/useThemeColors";
-import { Link } from "expo-router";
-import { getPokemonArtwork } from "@/functions/pokemon";
 
 type Props = {
 	style?: ViewStyle;

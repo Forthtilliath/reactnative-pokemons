@@ -1,13 +1,13 @@
-import { StyleSheet, View, type ViewProps } from "react-native";
-import { Row } from "../Row";
-import { ThemedText } from "../ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useEffect } from "react";
+import { StyleSheet, View, type ViewProps } from "react-native";
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
 } from "react-native-reanimated";
-import { useEffect } from "react";
+import { Row } from "../Row";
+import { ThemedText } from "../ThemedText";
 
 type Props = ViewProps & {
 	name: string;
@@ -28,7 +28,7 @@ export function PokemonStat({ style, name, value, color, ...rest }: Props) {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: no need to add sharedValue
 	useEffect(() => {
 		sharedValue.value = withSpring(value);
-	}, [value])
+	}, [value]);
 
 	return (
 		<Row style={[style, styles.root]} {...rest} gap={8}>
